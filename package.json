@@ -1,0 +1,17 @@
+{
+  "name": "cloudops-app",
+  "version": "1.0.0",
+  "description": "CloudOps Enterprise Platform - Node.js Application",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 0"
+  },
+  "keywords": ["cloudops", "aws", "enterprise"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mysql2": "^3.6.5"
+  }
+}

@@ -1,0 +1,7 @@
+aws_region       = "ap-south-2"
+vpc_cidr         = "10.0.0.0/16"
+environment      = "prod"
+app_name         = "cloudops"
+instance_type    = "t3.micro"
+db_password      = "Test123456"
+db_username      = "admin"
