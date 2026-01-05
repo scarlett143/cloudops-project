@@ -3,6 +3,8 @@ name: CloudOps CI/CD Pipeline
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   build-and-deploy:
@@ -54,13 +56,17 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H $EC2_HOST >> ~/.ssh/known_hosts 2>/dev/null || true
           ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST << 'DEPLOY'
-            cd /home/ubuntu/cloudops-app
-            git pull origin main || true
-            npm install
-            pkill -f "node app.js" || true
-            sleep 1
-            nohup node app.js > /tmp/app.log 2>&1 &
+          cd /home/ubuntu/cloudops-app
+          git pull origin main || true
+          npm install
+          pkill -f "node app.js" || true
+          sleep 1
+          nohup node app.js > /tmp/app.log 2>&1 &
+          sleep 2
+          echo "Deployment complete"
           DEPLOY
       
       - name: Verify deployment
-        run: curl -f http://${{ secrets.EC2_HOST }}:3000/health || true
+        run: |
+          sleep 5
+          curl -f http://${{ secrets.EC2_HOST }}:3000/health || true
